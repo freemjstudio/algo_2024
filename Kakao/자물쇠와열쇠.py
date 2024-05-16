@@ -4,7 +4,7 @@ def rorate_key(m):
     result = [[0] * m for _ in range(m)]  # key 를 담을 매트릭스
     for i in range(m):
         for j in range(m):
-            result[j][n - i - 1] = result[i][j]
+            result[j][m - i - 1] = result[i][j]
 
     return result
 
