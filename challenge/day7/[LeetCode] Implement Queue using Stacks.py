@@ -44,20 +44,42 @@ Follow-up: Can you implement the queue such that each operation is amortized O(1
 class MyQueue:
 
     def __init__(self):
-        self.queue = []
-
+        self.push_stack = []
+        self.pop_stack = []
+    
     def push(self, x: int) -> None:
-        
+        self.push_stack.append(x)
 
+    # leftpop 
     def pop(self) -> int:
-        return 
+        if self.pop_stack:
+            return self.pop_stack.pop()
+        else: 
+            while self.push_stack:
+                elem = self.push_stack.pop()
+                self.pop_stack.append(elem)
+            return self.pop_stack.pop()
 
     def peek(self) -> int:
-        
+        if self.pop_stack:
+            return self.pop_stack[-1]
+        else:
+            while self.push_stack:
+                elem = self.push_stack.pop()
+                self.pop_stack.append(elem)
+            return self.pop_stack[-1]
 
     def empty(self) -> bool:
-        
+        if self.push_stack or self.pop_stack:
+            return False
+        return True
 
+# Your MyQueue object will be instantiated and called as such:
+# obj = MyQueue()
+# obj.push(x)
+# param_2 = obj.pop()
+# param_3 = obj.peek()
+# param_4 = obj.empty()
 
 # Your MyQueue object will be instantiated and called as such:
 # obj = MyQueue()
