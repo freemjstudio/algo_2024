@@ -2,28 +2,34 @@
 
 class Solution:
     def solveSudoku(self, board: List[List[str]]) -> None:
-        # 백트래킹 
-        answer_set = set([i for i in range(1, 10)])
         
-        def check_valid():
+        # 1 - 9 사이의 숫자들 
+        numbers = [str(i) for i in range(1, 10)]
+        
+        # 이미 등장한 숫자이면 false 
+        def check_valid(row:int, col:int, target:str) -> bool:
             for i in range(9):
-                for j in range(9):
-                    if board[i][j] == '.':
-                        return False 
+                if board[i][col] == target or board[row][i] == target or board[(row//3) * 3 + (i//3)][(col//3)*3 + (i%3)] == target:
+                    return False 
             return True 
         
-        def backtracking(x, y): # 현재 좌표 
+        def solve(count: int) -> bool:
+            if count == 81: # 모든 숫자를 채움 
+                return True 
             
-            temp_set = set()
-            if check_valid():
-                return # 재귀 함수 탈출 
-            for i in range(9):
-                for j in range(9):
-                    if arr[i][x] == '':
-                    
+            i, j = count // 9, count%9 
+            
+            # 이미 숫자로 채워져 있는 칸은 pass 
+            if board[i][j] != ".":
+                return solve(count+1)
+            
+            for n in numbers:
+                if check_valid(i, j, n):
+                    board[i][j] = n 
+                    if solve(count+1):
+                        return True 
+                    board[i][j] = "."
+            
+            return False 
         
-        # 함수 실행 
-        for i in range(9):
-            for j in range(9):
-                if board[i][j] == ".":
-                    backtracking(i, j)    
+        solve(0)
