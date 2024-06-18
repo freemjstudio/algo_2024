@@ -18,6 +18,24 @@ Explanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,
 
 class Solution:
     def maxArea(self, height: List[int]) -> int:
+        
+        n = len(height)
         answer = 0 
+        left, right = 1, n
+        while left < right: 
+            w = (right - left) + 1
+            h = min(height[left], height[right])
+            answer = max(answer, w*h)
+
+            # 어느 조건에서 left += 1 혹은 right -= 1
+            left += 1
+            right -= 1
 
         return answer 
+    
+
+# Test Code 
+s = Solution()
+height = [1,8,6,2,5,4,8,3,7]
+result = s.maxArea(height=height)
+print(result)
