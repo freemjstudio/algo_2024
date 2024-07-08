@@ -37,20 +37,28 @@ If 99% of all integer numbers from the stream are in the range [0, 100], how wou
 
 class MedianFinder:
     def __init__(self):
-        self.arr = []
+        self.arr = [] # 항상 정렬된 상태여야 함 -> 링크드 리스트 ? 
 
     def addNum(self, num: int) -> None:
         self.arr.append(num)
-        print("after addNum:", self.arr)
         
     def findMedian(self) -> float:
+        self.arr.sort()
         if len(self.arr) % 2 == 1: # 홀수 
             mid = len(self.arr)//2
             return self.arr[mid]
         else: # 짝수인 경우 
+            
             mid = len(self.arr)//2
+            # print("mid: ", self.arr[mid], self.arr[mid-1])
+            # print((self.arr[mid] + self.arr[mid-1])/2)
             return (self.arr[mid] + self.arr[mid-1])/2
 
+
+# Your MedianFinder object will be instantiated and called as such:
+# obj = MedianFinder()
+# obj.addNum(num)
+# param_2 = obj.findMedian()
 
 # Your MedianFinder object will be instantiated and called as such:
 # obj = MedianFinder()
