@@ -26,6 +26,9 @@ medianFinder.findMedian(); // return 1.5 (i.e., (1 + 2) / 2)
 medianFinder.addNum(3);    // arr[1, 2, 3]
 medianFinder.findMedian(); // return 2.0
 
+["MedianFinder","addNum","addNum","findMedian","addNum","findMedian"]
+[[],[1],[2],[],[3],[]]
+
 Follow up:
 
 If all integer numbers from the stream are in the range [0, 100], how would you optimize your solution?
@@ -33,14 +36,26 @@ If 99% of all integer numbers from the stream are in the range [0, 100], how wou
 """
 
 class MedianFinder:
-
     def __init__(self):
-        
+        self.arr = []
 
     def addNum(self, num: int) -> None:
+        self.arr.append(num)
+        print("after addNum:", self.arr)
         
-
     def findMedian(self) -> float:
+        if len(self.arr) % 2 == 1: # 홀수 
+            mid = len(self.arr)//2
+            return self.arr[mid]
+        else: # 짝수인 경우 
+            mid = len(self.arr)//2
+            return (self.arr[mid] + self.arr[mid-1])/2
+
+
+# Your MedianFinder object will be instantiated and called as such:
+# obj = MedianFinder()
+# obj.addNum(num)
+# param_2 = obj.findMedian()
         
 
 
