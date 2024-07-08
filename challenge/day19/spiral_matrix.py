@@ -13,8 +13,6 @@ class Solution:
         n = len(matrix)
         m = len(matrix[0])
         visited = [[False] * m for _ in range(n)]
-        total = n*m # matrix 칸의 개수 
-        count = 0 
         d = 0 # 방향키 
 
         x, y = 0, 0 
