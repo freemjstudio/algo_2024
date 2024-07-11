@@ -1,8 +1,43 @@
-# 첫번째 시도 2266 ms
+"""
+
+https://leetcode.com/problems/find-median-from-data-stream/
+
+The median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value, and the median is the mean of the two middle values.
+
+For example, for arr = [2,3,4], the median is 3.
+For example, for arr = [2,3], the median is (2 + 3) / 2 = 2.5.
+Implement the MedianFinder class:
+
+MedianFinder() initializes the MedianFinder object.
+void addNum(int num) adds the integer num from the data stream to the data structure.
+double findMedian() returns the median of all elements so far. Answers within 10-5 of the actual answer will be accepted.
+
+Input
+["MedianFinder", "addNum", "addNum", "findMedian", "addNum", "findMedian"]
+[[], [1], [2], [], [3], []]
+Output
+[null, null, null, 1.5, null, 2.0]
+
+Explanation
+MedianFinder medianFinder = new MedianFinder();
+medianFinder.addNum(1);    // arr = [1]
+medianFinder.addNum(2);    // arr = [1, 2]
+medianFinder.findMedian(); // return 1.5 (i.e., (1 + 2) / 2)
+medianFinder.addNum(3);    // arr[1, 2, 3]
+medianFinder.findMedian(); // return 2.0
+
+["MedianFinder","addNum","addNum","findMedian","addNum","findMedian"]
+[[],[1],[2],[],[3],[]]
+
+Follow up:
+
+If all integer numbers from the stream are in the range [0, 100], how would you optimize your solution?
+If 99% of all integer numbers from the stream are in the range [0, 100], how would you optimize your solution?
+"""
 
 class MedianFinder:
     def __init__(self):
-        self.arr = [] # 항상 정렬된 상태여야 함
+        self.arr = [] # 항상 정렬된 상태여야 함 -> 링크드 리스트 ? 
 
     def addNum(self, num: int) -> None:
         self.arr.append(num)
@@ -15,40 +50,24 @@ class MedianFinder:
         else: # 짝수인 경우 
             
             mid = len(self.arr)//2
+            # print("mid: ", self.arr[mid], self.arr[mid-1])
+            # print((self.arr[mid] + self.arr[mid-1])/2)
             return (self.arr[mid] + self.arr[mid-1])/2
 
-# 두번째 시도 347 ms
 
-from heapq import * 
-class MedianFinder:
+# Your MedianFinder object will be instantiated and called as such:
+# obj = MedianFinder()
+# obj.addNum(num)
+# param_2 = obj.findMedian()
 
-    def __init__(self):
-        # 최대힙과 최소힙을 두고 밸런싱을 해나간다. 
-        self.min_heap = []
-        self.max_heap = []
-
-    def addNum(self, num: int) -> None:
-    # 최대힙이 비어 있는 경우 insert
-    # 최대힙의 최대 값이 num 보다 크면 insert 
-        if not self.max_heap or -self.max_heap[0] >= num:
-            # 최대힙으로 사용하기 위해서는 음수로 처리해줘서 역정렬해주어야 함 
-            heappush(self.max_heap, -num)
-        else: 
-            heappush(self.min_heap, num)
-            
-		    # 두개의 heap 을 balance 하는 과정  
-        # max_heap 의 길이는 min_heap 보다 항상 같거나, 1만큼 더 길어야 한다. 
-        # (중앙값을 구해야하기 떄문)
-        if len(self.max_heap) > len(self.min_heap) + 1:
-            heappush(self.min_heap, -heappop(self.max_heap))
-        elif len(self.max_heap) < len(self.min_heap):
-            heappush(self.max_heap, -heappop(self.min_heap))
+# Your MedianFinder object will be instantiated and called as such:
+# obj = MedianFinder()
+# obj.addNum(num)
+# param_2 = obj.findMedian()
         
 
-    def findMedian(self) -> float:
-        # 짝수 인 경우 각각의 root 에서 빼주면 됨 
-        if len(self.min_heap) == len(self.max_heap):
-            return (self.min_heap[0] + -self.max_heap[0])/2.0
-        else: 
-            return (-self.max_heap[0])/1.0
-        
+
+# Your MedianFinder object will be instantiated and called as such:
+# obj = MedianFinder()
+# obj.addNum(num)
+# param_2 = obj.findMedian()
