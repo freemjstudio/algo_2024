@@ -30,6 +30,7 @@ class Solution:
         def dfs(root, max_total):
             if root is None: # node 
                 return 0
+            
             left_max = max(dfs(root.left, max_total), 0)
             right_max = max(dfs(root.right, max_total), 0)
             
@@ -37,7 +38,7 @@ class Solution:
             
             return root.val + max(left_max, right_max)
         
-        return dfs(root, 0)
+        return dfs(root, root.val)
 
 s = Solution()
 r = [-10,9,20,null,null,15,7]
