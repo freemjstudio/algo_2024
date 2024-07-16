@@ -30,13 +30,15 @@ class Solution:
         def dfs(root, max_total):
             if root is None: # node 
                 return 0
-            
             left_max = max(dfs(root.left, max_total), 0)
             right_max = max(dfs(root.right, max_total), 0)
             
             max_total = max(max_total, root.val + left_max + right_max)
             
-            return max_total
-        dfs(root, 0)
-        return 
+            return root.val + max(left_max, right_max)
         
+        return dfs(root, 0)
+
+s = Solution()
+r = [-10,9,20,null,null,15,7]
+s.maxPathSum(root=)
