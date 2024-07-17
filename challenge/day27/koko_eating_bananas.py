@@ -21,39 +21,29 @@ Output: 30
 Input: piles = [30,11,23,4,20], h = 6
 Output: 23
 """
-import copy 
 
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
         MAX_K = max(piles)
-        answer = MAX_K
+        answer = MAX_K 
         
-        def check_eatable(tmp_piles, k):
-            n = len(tmp_piles)
+        def check_eatable(piles, k):
             cnt = 0 
-            # index 이용해서 푸는 걸로 바꾸기 
-            for i in range(n):
-                
-                if cnt >= h:
-                    return False 
-                print(tmp_piles)
-                if tmp_piles[i] > 0 : 
-                    tmp_piles[i] -= k 
+            for p in piles: 
+                cnt += p // k 
+                if (p % k) != 0:
                     cnt += 1
-                    continue 
-
-            
+            if cnt > h:
+                return False 
             return True 
 
-        left, right = 1, MAX_K * 2
+        left, right = 1, MAX_K
         while left <= right:
-            mid = (left + right) // 2
+            mid = (left + right) // 2 # 이 mid 값으로 minimum k 값을 찾는다. 
             
-            tmp_piles = copy.deepcopy(piles)
         
-            if check_eatable(tmp_piles, mid):
+            if check_eatable(piles, mid):
                 answer = min(mid, answer)
-                print("MID", mid)
                 right = mid - 1
             else: 
                 left = mid + 1
