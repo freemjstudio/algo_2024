@@ -31,8 +31,23 @@ friends	gifts	result
 
 """
 
-
 def solution(friends, gifts):
-    
+
     answer = 0
+
+    for gift in gifts: 
+        gift = gift.split()
+        giver, receiver = gift[0], gift[1]
+
+        
+
+
     return answer
+
+### TEST CASE ### 
+
+f1 = ["muzi", "ryan", "frodo", "neo"]
+g1 = ["muzi frodo", "muzi frodo", "ryan muzi", "ryan muzi", "ryan muzi", "frodo muzi", "frodo ryan", "neo muzi"]
+
+r1 = solution(f1, g1)
+print(r1)
