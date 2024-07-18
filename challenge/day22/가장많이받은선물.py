@@ -23,7 +23,15 @@ gifts의 원소는 "A B"형태의 문자열입니다. A는 선물을 준 친구�
 A와 B는 friends의 원소이며 A와 B가 같은 이름인 경우는 존재하지 않습니다.
 
 friends	gifts	result
-["muzi", "ryan", "frodo", "neo"]	["muzi frodo", "muzi frodo", "ryan muzi", "ryan muzi", "ryan muzi", "frodo muzi", "frodo ryan", "neo muzi"]	2
+["muzi", "ryan", "frodo", "neo"]	
+["muzi frodo", 
+"muzi frodo", 
+"ryan muzi", 
+"ryan muzi", 
+"ryan muzi",
+ "frodo muzi", 
+ "frodo ryan",
+ "neo muzi"]	2
 
 ["joy", "brad", "alessandro", "conan", "david"]	["alessandro brad", "alessandro joy", "alessandro conan", "david alessandro", "alessandro david"]	4
 
@@ -31,7 +39,7 @@ friends	gifts	result
 
 """
 
-from collections import defaultdict
+from itertools import combinations
 
 def solution(friends, gifts):
 
@@ -45,29 +53,36 @@ def solution(friends, gifts):
         give_log[giver][receiver] += 1 # 준 기록 
         receive_log[receiver][giver] += 1 # 받은 기록 
 
-    score = {f : sum(receive_log[f].values()) for f in friends}
-    for me in friends: 
-        for friend in friends: 
-            if me == friend:
-                continue
-            # 준 선물의 수 > 받은 선물의 수 
-            if give_log[me][friend] > receive_log[me][friend]:
-                score[me] += 1
-            elif give_log[me][friend] < receive_log[me][friend]:
-                score[friend] += 1
-            else: # 선물 지수 구하기 
-                my_gift_score = sum(give_log[me].values()) - sum(receive_log[me].values())
-                friend_gift_score = sum(give_log[friend].values()) - sum(receive_log[me].values())
-                if my_gift_score > friend_gift_score:
-                    score[me] += 1
-                elif my_gift_score < friend_gift_score:
-                    score[friend] += 1
-                else: 
-                    continue 
+    give_sum = {f : sum(give_log[f].values()) for f in friends}
+    # receive_sum = {f : sum(receive_log[f].values()) for f in friends}
+    receive_sum = {f: 0 for f in friends}
+    # print("give_sum:", give_sum)
+    # print("receive_sum:", receive_sum)
+    # print("give_log", give_log)
+    # print("receive_log", receive_log)
+    for comb in combinations(friends, 2):
+        # print(comb)
+        me, friend = comb 
+        if give_log[me][friend] > receive_log[me][friend]:
+            receive_sum[me] += 1
+        elif give_log[me][friend] < receive_log[me][friend]:
+            receive_sum[friend] += 1
+        else:
+            my_gift_score = sum(give_log[me].values()) - sum(receive_log[me].values())
+            friend_gift_score = sum(give_log[friend].values()) - sum(receive_log[me].values())
+            
+            # print("my_gift_score", my_gift_score)
+            # print("friend_gift_score", friend_gift_score)
 
+            if my_gift_score > friend_gift_score:
+                receive_sum[me] += 1
+            elif my_gift_score < friend_gift_score:
+                receive_sum[friend] += 1
+            else:
+                continue
 
     # 가장 많이 선물을 받은 개수 반환 
-    return max(score.values())
+    return max(receive_sum.values())
 
 ### TEST CASE ### 
 
