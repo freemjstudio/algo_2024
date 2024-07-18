@@ -40,14 +40,11 @@ class Solution:
         left, right = 1, MAX_K
         while left <= right:
             mid = (left + right) // 2 # 이 mid 값으로 minimum k 값을 찾는다. 
-            
-        
             if check_eatable(piles, mid):
                 answer = min(mid, answer)
                 right = mid - 1
             else: 
                 left = mid + 1
-
         return answer 
 
 piles = [3,6,7,11]
