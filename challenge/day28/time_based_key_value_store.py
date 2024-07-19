@@ -37,12 +37,25 @@ At most 2 * 105 calls will be made to set and get.
 class TimeMap:
 
     def __init__(self):
+        self.store = dict()
         
-
     def set(self, key: str, value: str, timestamp: int) -> None:
-        
+        if key not in self.store: 
+            self.store[key] = dict()
+        self.store[key][timestamp] = value 
 
     def get(self, key: str, timestamp: int) -> str:
+        if timestamp in self.store[key].keys(): 
+            return self.store[key][timestamp]
+        else: 
+            # 없으면 가장 앞에 있는 값을 리턴한다. 
+            last_key, last_value = None, None 
+            print(self.store)
+            # if k, v in self.store[key].items():
+            #     last_key, last_value = k, v 
+            return last_key
+
+         
         
 
 
