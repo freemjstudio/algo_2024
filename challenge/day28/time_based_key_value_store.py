@@ -34,38 +34,82 @@ All the timestamps timestamp of set are strictly increasing.
 At most 2 * 105 calls will be made to set and get.
 """
 
-class TimeMap:
-
-    def __init__(self):
-        self.store = dict()
+# class TimeMap:
+#     def __init__(self):
+#         self.store = dict()
         
-    def set(self, key: str, value: str, timestamp: int) -> None:
-        if key not in self.store: 
-            self.store[key] = dict()
-        self.store[key][timestamp] = value 
-    
+#     def set(self, key: str, value: str, timestamp: int) -> None:
+#         if key not in self.store: 
+#             self.store[key] = dict()
+#         self.store[key][timestamp] = value 
 
-    def get(self, key: str, timestamp: int) -> str:
-        if timestamp in self.store[key].keys(): 
-            return self.store[key][timestamp]
-        else: 
-            # 없으면 가장 앞에 있는 값을 리턴한다. ß
-            last_key, last_value = None, None 
-  
-            if len(self.store[key].values()) > 0: 
-                for k, v in self.store[key].items():
-                    if k and v: 
-                        last_key, last_value = k, v
-                    else: 
-                        break 
-                return last_value
-            else: # 아예 값이 없는 경우 
-                return ""
+#     def get(self, key: str, timestamp: int) -> str:
+        
+#         if timestamp in self.store[key].keys(): 
+#             return self.store[key][timestamp]
+#         else: 
+#             # 없으면 가장 앞에 있는 값을 리턴한다. 
+#             last_key, last_value = None, None 
+#             key_list = list(self.store[key].keys())
+                            
+#             if key_list: 
+#                 if key_list[0] > timestamp:
+#                     return ""
+#                 for k, v in self.store[key].items():
+#                     if k: 
+#                         if k < timestamp:
+#                             last_key, last_value = k, v
+#                         else: 
+#                             break 
+#                     else: 
+#                         break 
+                    
+#                 return last_value
+#             else: # 아예 값이 없는 경우 
+#                 return ""
          
         
-
+# d = {1:'a', 2:'b', 3:'c'}
+# for k, v in d.items():
+#     print(k, v)
 
 # Your TimeMap object will be instantiated and called as such:
 # obj = TimeMap()
 # obj.set(key,value,timestamp)
 # param_2 = obj.get(key,timestamp)
+
+# 통과된 풀이 
+
+from collections import defaultdict 
+
+class TimeMap:
+    def __init__(self):
+        self.store = defaultdict(list) 
+        
+    def set(self, key: str, value: str, timestamp: int) -> None:
+        self.store[key].append((value, timestamp)) 
+
+    def get(self, key: str, timestamp: int) -> str:
+        # timestamp info 
+        ts_log = self.store[key] 
+        
+        if len(ts_log) == 0 or ts_log[0][1] > timestamp: 
+            return "" 
+        
+        # timestamp 보다 작으면서, timestamp 와 가장 가까운 시간의 값을 탐색 
+        # binary search O(logN)
+        answer = ""
+        left, right = 0, len(ts_log)
+
+        while left <= right and left < len(ts_log):
+            mid = (left+right)//2
+     
+            if ts_log[mid][1] == timestamp:
+                return ts_log[mid][0]
+            elif ts_log[mid][1] < timestamp:
+                answer = ts_log[mid][0]
+                left = mid + 1
+            else: 
+                right = mid -1
+          
+        return answer 
