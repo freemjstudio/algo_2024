@@ -43,18 +43,24 @@ class TimeMap:
         if key not in self.store: 
             self.store[key] = dict()
         self.store[key][timestamp] = value 
+    
 
     def get(self, key: str, timestamp: int) -> str:
         if timestamp in self.store[key].keys(): 
             return self.store[key][timestamp]
         else: 
-            # 없으면 가장 앞에 있는 값을 리턴한다. 
+            # 없으면 가장 앞에 있는 값을 리턴한다. ß
             last_key, last_value = None, None 
-            print(self.store)
-            # if k, v in self.store[key].items():
-            #     last_key, last_value = k, v 
-            return last_key
-
+  
+            if len(self.store[key].values()) > 0: 
+                for k, v in self.store[key].items():
+                    if k and v: 
+                        last_key, last_value = k, v
+                    else: 
+                        break 
+                return last_value
+            else: # 아예 값이 없는 경우 
+                return ""
          
         
 
