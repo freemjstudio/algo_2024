@@ -40,29 +40,29 @@ n == gas.length == cost.length
 0 <= gas[i], cost[i] <= 104
 """
 
-from typing import List
+from typing import List 
 
 class Solution:
     def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
-        answer = -1
-        n = len(gas)
+        total_gas = 0 # 순환하면서 total gas 를 누적해 나감 
+        total_cost = 0 # 순환하면서 total cost를 누적해 나감 
+        current_gas = 0 # 현재 tank 에 있는 gas 상태 
+        start_index = 0 # potential starting index for the journey 
+
+        # simulate 
+        for i in range(len(gas)):
+            total_gas += gas[i] 
+            total_cost += cost[i]
+            current_gas += gas[i] - cost[i]
         
-        for idx in range(n): 
-            tank = gas[idx]
-            for j in range(n):
-                next = (idx + 1) % n 
-                if j == (n-1):
-                    if tank >= cost[next]:
-                        return idx 
-                else:
+            if current_gas < 0:
+                start_index = i + 1
+                current_gas = 0
 
-                    if tank >= cost[next]:
-                        tank -= cost[next]
-                        tank += gas[next]
-                    else: 
-                        break 
-
-        return answer 
+        if total_gas < total_cost:
+            return -1
+        else:
+            return start_index
 
 #### Test Case 1 
 
@@ -72,3 +72,5 @@ cost = [3,4,5,1,2]
 s = Solution()
 answer = s.canCompleteCircuit(gas=gas, cost=cost)
 print(answer)
+
+
