@@ -50,6 +50,8 @@ class Solution:
         start_index = 0 # potential starting index for the journey 
 
         # simulate 
+        # 모든 potential starting index 를 검사하지는 않는다. 
+        # -> 이는 불필요함. 총 가스 양이 총 비용 보다 작으면 어느 시작점이든 전체 주유소를 순회하는 것이 불가능하기 때문이다. 
         for i in range(len(gas)):
             total_gas += gas[i] 
             total_cost += cost[i]
@@ -63,6 +65,24 @@ class Solution:
             return -1
         else:
             return start_index
+
+"""
+
+총 가스와 총 비용을 계산:
+
+총 가스: 1 + 2 + 3 + 4 + 5 = 15
+총 비용: 3 + 4 + 5 + 1 + 2 = 15
+따라서 총 가스가 총 비용과 같으므로, 순환이 가능하다는 것을 알 수 있습니다.
+
+현재 가스를 계산하며 순회:
+
+i=0: current_gas = 1 - 3 = -2 (음수이므로 시작점 갱신)
+i=1: current_gas = 2 - 4 = -2 (음수이므로 시작점 갱신)
+i=2: current_gas = 3 - 5 = -2 (음수이므로 시작점 갱신)
+i=3: current_gas = 4 - 1 = 3 (음수 아님)
+i=4: current_gas = 3 + 5 - 2 = 6 (음수 아님)
+
+"""
 
 #### Test Case 1 
 
