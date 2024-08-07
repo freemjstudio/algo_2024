@@ -6,8 +6,8 @@
 4. 행렬의 곱셈 - Level 2
 
 4장. 문자열
-5. 자연수 뒤집어 배열로 만들기 – Level 1
-6. 시저 암호 - Level 1
+5. 자연수 뒤집어 배열로 만들기 – Level 1 :white_check_mark:
+6. 시저 암호 - Level 1 
 7. 이상한 문자 만들기 – Level 1
 8. 문자열 압축 – Level 2
 9. 3진법 뒤집기 - Level 1
