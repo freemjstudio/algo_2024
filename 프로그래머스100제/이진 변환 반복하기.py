@@ -2,6 +2,7 @@
 
 s = "101101"
 
+# 2진수로 변환하는 함수 
 def change_to_binary(n):
     result = []
     
@@ -9,13 +10,12 @@ def change_to_binary(n):
         result.append(str(n%2))
         n //= 2
         if n == 1:
+            result.append("1")
             break 
-    
     
     return "".join(result[::-1])
 
-n = 6
-print(bin(n))
+print(change_to_binary(6))
 
 """
 def remove_zero(s):
