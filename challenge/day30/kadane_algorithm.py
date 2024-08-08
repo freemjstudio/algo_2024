@@ -1,2 +1,0 @@
-# Kadane's Algorithm 
-
