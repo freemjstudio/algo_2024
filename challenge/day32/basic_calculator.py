@@ -20,18 +20,72 @@ Input: s = "(1+(4+5+2)-3)+(6+8)"
 Output: 23
 """
 
-class Solution:
-    def calculate(self, s: str) -> int:
-        answer = 0
-        stack = []
-        # ( 나오면 push
-        # ) 나오면 pop
-        # +, - 만 있나 ? 
+"""
+우선순위 
+1. (
+2. )
+3. +, - 은 동일 
+"""
 
-        return answer
+class Solution:
+    def remove_whitespace(self, s: str) -> str: 
+        return s.replace(" ", "")
+    
+    def calculate(self, s: str) -> int:
+        # 1. 후위 표현식으로 변환하기 
+        stack = []
+        # 숫자가 작을수록 우선순위가 높음. 
+        operator = {"(": 1, ")":2, "+":3, "-":3}
+        s = self.remove_whitespace(s) 
+        # print("str:", s)
+        post_expr = "" # 후위 표현식
+        for x in s: 
+            if x.isnumeric():
+                post_expr += x
+            else: 
+                if not stack: # stack 이 비어있는 경우 
+                    stack.append(x)
+                else: 
+                    if x == ")": 
+                        while stack: 
+                            t = stack.pop()
+                            if t == "(":
+                                break 
+                            post_expr += t
+                    elif x == "(":
+                        post_expr += x
+                    else:  
+                        while stack:
+                            top = stack[-1]
+                            if operator[top] > operator[x]: # x 의 우선순위가 더 높다면  
+                                stack.append(x)
+                            else: # 같거나 우선순위 낮은 경우
+                                post_expr += stack.pop()
+                        stack.append(x)
+
+        while stack:
+            post_expr += stack.pop()
+        # print("### POSTFIX",post_expr)
+
+        # 2. 변환된 후위 표현식을 계산하기 
+        for x in post_expr:
+            # 숫자 (피연산자) 이면 집어넣기 
+            if x.isnumeric():
+                stack.append(x)
+            elif x in ["+", "-"]: # 연산자 
+                b = stack.pop()
+                a = stack.pop()
+                if x == "+":
+                    tmp = int(a) + int(b)
+                else:
+                    tmp = int(a) - int(b)
+                stack.append(tmp)
+
+        return stack[-1]
+    
 ## TEST CODE
 sol = Solution()
 s = "(1+(4+5+2)-3)+(6+8)"
-
+# s = "1 + 1"
 answer = sol.calculate(s)
 print(answer)
