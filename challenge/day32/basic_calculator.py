@@ -34,14 +34,17 @@ class Solution:
     def calculate(self, s: str) -> int:
         # 1. 후위 표현식으로 변환하기 
         stack = []
+        
         # 숫자가 작을수록 우선순위가 높음. 
         operator = {"(": 1, ")":2, "+":3, "-":3}
-        s = self.remove_whitespace(s) 
-        # print("str:", s)
-        post_expr = "" # 후위 표현식
+        s = self.remove_whitespace(s)
+        # 숫자, 연산자로 분리해야 함 
+        if s.isnumeric():
+            return int(s)
+        post_expr = [] # 후위 표현식
         for x in s: 
             if x.isnumeric():
-                post_expr += x
+                post_expr.append(x)
             else: 
                 if not stack: # stack 이 비어있는 경우 
                     stack.append(x)
@@ -51,37 +54,38 @@ class Solution:
                             t = stack.pop()
                             if t == "(":
                                 break 
-                            post_expr += t
+                            post_expr.append(t)
                     elif x == "(":
-                        post_expr += x
+                        post_expr.append(x)
                     else:  
                         while stack:
                             top = stack[-1]
                             if operator[top] > operator[x]: # x 의 우선순위가 더 높다면  
                                 stack.append(x)
                             else: # 같거나 우선순위 낮은 경우
-                                post_expr += stack.pop()
+                                post_expr.append(stack.pop())
                         stack.append(x)
 
         while stack:
-            post_expr += stack.pop()
-        # print("### POSTFIX",post_expr)
+            post_expr.append(stack.pop())
+        print("### POSTFIX",post_expr)
 
         # 2. 변환된 후위 표현식을 계산하기 
         for x in post_expr:
             # 숫자 (피연산자) 이면 집어넣기 
             if x.isnumeric():
-                stack.append(x)
-            elif x in ["+", "-"]: # 연산자 
+                stack.append(int(x))
+            elif x in ["+", "-"] and len(stack) >= 2: # 연산자 
+
                 b = stack.pop()
                 a = stack.pop()
                 if x == "+":
-                    tmp = int(a) + int(b)
+                    tmp = a + b
                 else:
-                    tmp = int(a) - int(b)
+                    tmp = a - b
                 stack.append(tmp)
 
-        return stack[-1]
+        return stack.pop()
     
 ## TEST CODE
 sol = Solution()
