@@ -7,7 +7,6 @@ def print_arr(arr):
         print(*a)
 
 def solution(line):
-    answer = [] # 출력할 답 
     dots = [] # 교점 
     comb = list(combinations(line, 2))
     for items in comb:
@@ -24,15 +23,37 @@ def solution(line):
             # 정수인지 확인 
             if int(x) == x and int(y) == y:
                 dots.append((int(x), int(y)))
-    print("DOTS", dots)
 
+    print("DOTS", dots)
     # 교점을 배열에 그리기
-    
-    return answer
+    if len(dots) == 1: 
+        return ["*"]
+    min_x, min_y, max_x, max_y = int(1e9), int(1e9), -int(1e9), -int(1e9) 
+    for x, y in dots: 
+        min_x, min_y = min(min_x, x), min(min_y, y)
+        max_x, max_y = max(max_x, x), max(max_y, y)
+    print(min_x, min_y, max_x, max_y)
+    answer = [['.'] * (max_x - min_x + 1) for _ in range(max_y - min_y + 1)]
+
+    for x, y in dots:
+        answer[y - min_y][x - min_x] = "*" # 이것도 왜 x,y 가 아니라 y,x 인지 모르겠음 
+        print(y - min_y, x - min_x)
+    answer.reverse() # 이걸 이해못함 
+    return ["".join(row) for row in answer]
 
 line = [[2, -1, 4], [-2, -1, 4], [0, -1, 1], [5, -8, -12], [5, 8, 12]]
+"""
+["....*....", 
+".........", 
+".........", 
+"*.......*", 
+".........", 
+".........", 
+".........", 
+".........", 
+"*.......*"]
+"""
 print_arr(solution(line))
-
 
 line2 = [[0, 1, -1], [1, 0, -1], [1, 0, 1]]
 print_arr(solution(line2))
