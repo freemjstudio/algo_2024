@@ -1,6 +1,6 @@
 
 3장. 배열
-1. 교점에 별 만들기 - Level 2
+1. 교점에 별 만들기 - Level 2 :white_check_mark:
 2. 삼각 달팽이 - Level 2
 3. 거리두기 확인하기 - Level 2
 4. 행렬의 곱셈 - Level 2
@@ -15,7 +15,7 @@
 11. 문자열 내 p와 y의 개수 - Level 1
 12. 숫자 문자열과 영단어 - Level 1
 13. 문자열 다루기 기본 - Level 1
-14. 신규 아이디 추천 - Level 1
+14. 신규 아이디 추천 - Level 1 :white_check_mark:
 
 5장. 재귀
 15. 쿼드압축 후 개수 세기 - Level 2
