@@ -1,5 +1,3 @@
-# https://school.programmers.co.kr/learn/courses/30/lessons/72410
-
 def solution(new_id):
     # step 1
     new_id = new_id.lower()
@@ -21,28 +19,33 @@ def solution(new_id):
                 count = 0 # 다시 0 으로 리셋하기 
         else:
             count += 1
-    # step 4
-    while True:
-        if step3[0] == '.':
-            step3.pop(0)
-        elif step3[-1] == '.':
-            step3.pop(-1)
-        else: 
+    # step 4 : 마침표(.)가 처음이나 끝에 위치한다면 제거
+    step4 = list(step3)
+
+    while step4:
+        if step4[0] == '.':
+            step4.pop(0)
+        if step4[-1] == '.':
+            step4.pop()
+        if step4[0] != '.' and step4[-1] != '.': 
             break
-    # step 5
-    step4 = step3
+    # step 5 : 빈 문자열이라면, new_id에 "a"를 대입
     if len(step4) == 0:
         step4 = "a"
-    step5 = step4 
-    # step 6
+    step5 = "".join(step4)
+    # step 6 : new_id의 첫 15개의 문자를 제외한 나머지 문자들을 모두 제거
     if len(step5) >= 16:
-        step6 = 
+        step6 = list(step5[:16])
+        while step6[-1] != ".":
+            step6.pop()
+        step6 = "".join(step6)
     else: 
         step6 = step5
-    
+       
     # step 7 
     if len(step6) <= 2:
-        
+        while len(step6) == 3:
+            step6 += step6[-1]
         return step6
     else: 
         return step6
