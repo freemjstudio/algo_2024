@@ -21,7 +21,7 @@ def solution(new_id):
             count += 1
     # step 4 : 마침표(.)가 처음이나 끝에 위치한다면 제거
     step4 = list(step3)
-
+ 
     while step4:
         if step4[0] == '.':
             step4.pop(0)
@@ -35,8 +35,8 @@ def solution(new_id):
     step5 = "".join(step4)
     # step 6 : new_id의 첫 15개의 문자를 제외한 나머지 문자들을 모두 제거
     if len(step5) >= 16:
-        step6 = list(step5[:16])
-        while step6[-1] != ".":
+        step6 = list(step5[:15])
+        while step6[-1] == ".":
             step6.pop()
         step6 = "".join(step6)
     else: 
@@ -44,8 +44,9 @@ def solution(new_id):
        
     # step 7 
     if len(step6) <= 2:
-        while len(step6) == 3:
+        while len(step6) < 3:
             step6 += step6[-1]
         return step6
     else: 
         return step6
+ 
