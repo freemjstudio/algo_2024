@@ -47,7 +47,6 @@ class Solution:
                 count += 1
                 i += 1
             chars[answer] = now
-            print("chars[answer]",chars)
             answer += 1
             # count 를 사용해서 압축처리 
             if count > 1: 
