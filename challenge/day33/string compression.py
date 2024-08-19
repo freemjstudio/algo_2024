@@ -33,52 +33,40 @@ Explanation: The groups are "a" and "bbbbbbbbbbbb". This compresses to "ab12".
 """
 from typing import List 
 
-# 로직 상관없이 구현하기 
-# class Solution:
-#     def compress(self, chars: List[str]) -> int:
-#         answer = []
-#         # 추가적인 space를 쓰지 말아야 함! set() 도 따라서 사용하면 안될듯 
-#         alphabets = set(chars)
-#         for ch in alphabets:
-#             n = chars.count(ch)
-#             if n == 1: 
-#                 answer.append(ch)
-#                 continue 
-#             else: 
-#                 answer.append(ch)
-#                 if n < 10:
-#                     answer.append(str(n))
-#                 else: # 두자릿수 이상 
-#                     n = str(n)
-#                     for x in n:
-#                         answer.append(x)
-            
-#         return len(answer)
-
-# 문제 조건에 따라 풀기 
-# chars 도 검사를 하고 있음 
+# 투포인터 (인덱스를 두개 사용해서 압축진행)
 class Solution:
     def compress(self, chars: List[str]) -> int:
-        answer = ""
-        # 추가적인 space를 쓰지 말아야 함! set() 도 따라서 사용하면 안될듯 
-        alphabets = set(chars)
-        for ch in alphabets:
-            n = chars.count(ch)
-            if n == 1: 
-                answer += ch 
-                continue 
-            else: 
-                answer += ch
-                answer += str(n) 
-            
-        return len(answer)
+        i = 0
+        answer = 0 
+        while i < len(chars):
+            now = chars[i] 
+            count = 0
+     
+            # 동일한 character 개수 세기 
+            while i < len(chars) and chars[i] == now: 
+                count += 1
+                i += 1
+            chars[answer] = now
+            print("chars[answer]",chars)
+            answer += 1
+            # count 를 사용해서 압축처리 
+            if count > 1: 
+                count = str(count)
+                for c in count: 
+                    chars[answer] = c 
+                    print(chars)
+                    answer += 1
+
+        return answer
 
 # TEST CASE 1 
 sol = Solution()
 chars1 = ["a","a","b","b","c","c","c"]
+print("######")
 tc1 = sol.compress(chars1)
 print("TESTCASE 1:", tc1)
 
+print("######")
 # TEST CASE 2
 sol = Solution()
 chars2 = ["a","b","b","b","b","b","b","b","b","b","b","b","b"]
