@@ -6,7 +6,8 @@ Begin with an empty string s. For each group of consecutive repeating characters
 
 If the group's length is 1, append the character to s.
 Otherwise, append the character followed by the group's length.
-The compressed string s should not be returned separately, but instead, be stored in the input character array chars. Note that group lengths that are 10 or longer will be split into multiple characters in chars.
+The compressed string s should not be returned separately, but instead, be stored in the input character array chars.
+Note that group lengths that are 10 or longer will be split into multiple characters in chars.
 
 After you are done modifying the input array, return the new length of the array.
 
@@ -32,11 +33,45 @@ Explanation: The groups are "a" and "bbbbbbbbbbbb". This compresses to "ab12".
 """
 from typing import List 
 
+# 로직 상관없이 구현하기 
+# class Solution:
+#     def compress(self, chars: List[str]) -> int:
+#         answer = []
+#         # 추가적인 space를 쓰지 말아야 함! set() 도 따라서 사용하면 안될듯 
+#         alphabets = set(chars)
+#         for ch in alphabets:
+#             n = chars.count(ch)
+#             if n == 1: 
+#                 answer.append(ch)
+#                 continue 
+#             else: 
+#                 answer.append(ch)
+#                 if n < 10:
+#                     answer.append(str(n))
+#                 else: # 두자릿수 이상 
+#                     n = str(n)
+#                     for x in n:
+#                         answer.append(x)
+            
+#         return len(answer)
+
+# 문제 조건에 따라 풀기 
+# chars 도 검사를 하고 있음 
 class Solution:
     def compress(self, chars: List[str]) -> int:
-        answer = 0 
-        
-        return answer 
+        answer = ""
+        # 추가적인 space를 쓰지 말아야 함! set() 도 따라서 사용하면 안될듯 
+        alphabets = set(chars)
+        for ch in alphabets:
+            n = chars.count(ch)
+            if n == 1: 
+                answer += ch 
+                continue 
+            else: 
+                answer += ch
+                answer += str(n) 
+            
+        return len(answer)
 
 # TEST CASE 1 
 sol = Solution()
