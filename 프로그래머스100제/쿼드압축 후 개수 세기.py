@@ -42,22 +42,13 @@ result
 def solution(arr):
     answer = [0, 0] #0 개수, 1 개수 
     n = len(arr)
-    visited = [[False] * n for _ in range(n)]
-
-    def check_visited(i, j, m):
-        for i in range(i, i+m):
-            for j in range(j, j+m):
-                visited[i][j] = True
 
     def compress(x, y, l): # 좌측 상단 좌표 
-        if visited[x][y]: # 이미 방문한적 있으면 처리하지 않음 
-            return 
         if l == 1: # 1*1 칸의 경우 (더이상 재귀함수 호출이 필요 없으므로 종료)
             if arr[x][y] == 0:
                 answer[0] += 1
             else: 
                 answer[1] += 1
-            
             return 
         
         zero_cnt = 0 # 0의 개수  
@@ -69,12 +60,9 @@ def solution(arr):
                 else: 
                     one_cnt += 1
         if zero_cnt == l*l:
-            # 방문처리하기 
-            check_visited(x, y, l)
             answer[0] += 1
             return 
         if one_cnt == l*l:
-            check_visited(x, y, l)
             answer[1] += 1
             return 
         # 0, 1 섞여있는 경우 
@@ -86,3 +74,22 @@ def solution(arr):
     
     compress(0, 0, n)
     return answer
+
+# TEST CASE
+
+arr1 = [[1,1,0,0]
+,[1,0,0,0]
+,[1,0,0,1]
+,[1,1,1,1]]
+
+answer = solution(arr1)
+print('## TC 1:', answer)
+
+arr2 = [[1,1,1,1,1,1,1,1]
+,[0,1,1,1,1,1,1,1]
+,[0,0,0,0,1,1,1,1]
+,[0,1,0,0,1,1,1,1]
+,[0,0,0,0,0,0,1,1]
+,[0,0,0,0,0,0,0,1]
+,[0,0,0,0,1,0,0,1]
+,[0,0,0,0,1,1,1,1]]
