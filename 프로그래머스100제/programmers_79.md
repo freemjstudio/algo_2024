@@ -18,7 +18,7 @@
 14. 신규 아이디 추천 - Level 1 :white_check_mark:
 
 5장. 재귀
-15. 쿼드압축 후 개수 세기 - Level 2
+15. 쿼드압축 후 개수 세기 - Level 2 :white_check_mark:
 16. 하노이의 탑 - Level 3
 17. 모음 사전 - Level 2
 

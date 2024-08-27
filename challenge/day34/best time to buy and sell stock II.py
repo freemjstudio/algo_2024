@@ -43,6 +43,26 @@ from typing import List
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         answer = 0 
+        hold_stock = False # 주식 가지고 있는 경우 
+        # 증가하는 부분 수열 중 profit 이 최대인 것
+        buy_price = 0 
 
-        
+        n = len(prices)
+        for i in range(n-1):
+            # 지금이 최저가인 경우 
+            if prices[i] < prices[i+1] and not hold_stock:
+                hold_stock = True
+                buy_price = prices[i]
+            elif prices[i] > prices[i+1] and hold_stock:
+                hold_stock = False 
+                sell_price = prices[i]
+
+                answer += (sell_price - buy_price)
+
+        # 아직 가지고 있다면 
+        if hold_stock:
+            sell_price = prices[n-1]
+            if sell_price > buy_price: # 생각해보니 불필요함
+                answer += (sell_price - buy_price)
+
         return answer 
