@@ -62,7 +62,6 @@ class Solution:
         # 아직 가지고 있다면 
         if hold_stock:
             sell_price = prices[n-1]
-            if sell_price > buy_price: # 생각해보니 불필요함
-                answer += (sell_price - buy_price)
+            answer += (sell_price - buy_price)
 
         return answer 
