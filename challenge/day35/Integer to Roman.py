@@ -79,6 +79,6 @@ class Solution:
             div = 10 ** i
             q = num // div
             q_str = str(q) # 4 or 9 로 시작한다면 
-            
+            answer += roman[j]
 
         return answer 
