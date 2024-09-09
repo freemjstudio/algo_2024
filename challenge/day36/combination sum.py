@@ -46,10 +46,10 @@ class Solution:
         
         # backtracking 
         def backtracking(start_idx:int, target:int, path: List[int]):
-            if target < 0:
+            if target < 0: # 현재 조합(path)은 target을 만들 수 없는 경우 
                 return 
             if target == 0:
-                answer.append(path)
+                answer.append(path.copy())
                 return 
             
             for i in range(start_idx, len(candidates)):
@@ -61,7 +61,9 @@ class Solution:
         return answer 
     
 ### test case 1
-candidates = [2,3,6,7], target = 7
+candidates = [2,3,6,7]
+target = 7
+
 sol = Solution()
 answer = sol.combinationSum(candidates, target)
 print(answer)
