@@ -1,11 +1,12 @@
 # https://leetcode.com/problems/search-insert-position/description/?envType=study-plan-v2&envId=top-interview-150
 
 """
-Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+Given a sorted array of distinct integers and a target value
+, return the index if the target is found. 
+If not, return the index where it would be if it were inserted in order.
 
 You must write an algorithm with O(log n) runtime complexity.
 
- 
 
 Example 1:
 
@@ -25,5 +26,22 @@ from typing import List
 
 class Solution:
     def searchInsert(self, nums: List[int], target: int) -> int:
-        answer = 0 
-        return answer 
+        n = len(nums)
+        # index of the nums 
+        left, right = 0, n-1
+        while left <= right:
+            mid = (left+right)//2
+            if nums[mid] == target: 
+                return mid
+            elif nums[mid] > target: 
+                right = mid -1
+            elif nums[mid] < target: 
+                left = mid + 1
+        return left
+
+nums = [1,3]
+target = 2
+
+s = Solution()
+ans = s.searchInsert(nums, target)
+print(ans)
