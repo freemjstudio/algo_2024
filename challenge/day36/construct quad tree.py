@@ -18,3 +18,7 @@ class Solution:
     def construct(self, grid: List[List[int]]) -> Node:
         
         return 
+    
+s = Solution()
+grid = [[1,1,1,1,0,0,0,0],[1,1,1,1,0,0,0,0],[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],[1,1,1,1,0,0,0,0],[1,1,1,1,0,0,0,0],[1,1,1,1,0,0,0,0],[1,1,1,1,0,0,0,0]]
+print(s.construct(grid))
