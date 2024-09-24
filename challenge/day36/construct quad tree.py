@@ -15,10 +15,27 @@ class Node:
 
 
 class Solution:
-    def construct(self, grid: List[List[int]]) -> Node:
+    def construct(self, grid: List[List[int]]) -> 'Node':
+        n = len(grid)
+        # 정사각형 내부의 값이 모두 동일한지 확인 
+        def check_sqaure(x, y, n):
+            val = grid[x][y]
+            for i in range(x, x+n):
+                for j in range(y, y+n):
+                    if grid[i][j] != val: 
+                        return False 
+            return True 
         
+        
+        # 동일하면 quad 로 카운트하기,
+        # 동일하지 않으면 정사각형을 4개로 나눔 -> 다시 check_square 호출 
+        def make_quad_tree(n):
+            ...
+            
+        make_quad_tree(n)
         return 
     
 s = Solution()
 grid = [[1,1,1,1,0,0,0,0],[1,1,1,1,0,0,0,0],[1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1],[1,1,1,1,0,0,0,0],[1,1,1,1,0,0,0,0],[1,1,1,1,0,0,0,0],[1,1,1,1,0,0,0,0]]
 print(s.construct(grid))
+
