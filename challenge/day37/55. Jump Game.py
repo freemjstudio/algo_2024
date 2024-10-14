@@ -28,12 +28,21 @@ from typing import List
 
 class Solution:
     def canJump(self, nums: List[int]) -> bool: 
-        
-    
-        return True 
+        max_idx = 0 # 가장 멀리 도달할 수 있는 인덱스 
+        n = len(nums)
+
+        for idx, num in enumerate(nums):
+            # 현재 index 가 max_idx 보다 크면 안됨. 
+            if idx > max_idx:
+                return False 
+
+            max_idx = max(max_idx, idx + num)
+            if max_idx >= n-1: # 마지막 인덱스에 도착 가능
+                return True 
+        return False  
 
 # Edge Case
-nums = [2, 0, 0]
+nums = [3,2,1,0,4] # Expected : False 
 solution = Solution()
 print(solution.canJump(nums=nums))
 
