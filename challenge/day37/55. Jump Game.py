@@ -20,19 +20,25 @@ Output: false
 Explanation: You will always arrive at index 3 no matter what. Its maximum jump length is 0, which makes it impossible to reach the last index.
 """
 
-# queue 자료구조 ? 
-from collections import deque
+from typing import List
 
-from collections import deque
+# 문제 이해를 잘 못했었음 
+# 최대 2만큼 뛴다 -> 0, 1, 2만큼 뛸 수 있다.
+# Greedy 알고리즘 : 주어진 배열에서 가장 멀리 뛸 수 있는 인덱스를 확인한다 
 
 class Solution:
-    def canJump(self, nums: List[int]) -> bool:
-        answer = True
-        queue = deque(nums)
-        while queue:
-            num = queue.popleft() 
-            # jump_length == 0
-            if num == 0 and len(queue):
-                return False 
+    def canJump(self, nums: List[int]) -> bool: 
+        
+    
+        return True 
 
-        return answer 
+# Edge Case
+nums = [2, 0, 0]
+solution = Solution()
+print(solution.canJump(nums=nums))
+
+nums = [2,5,0,0]
+olution = Solution()
+print(solution.canJump(nums=nums))
+
+
