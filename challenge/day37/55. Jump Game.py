@@ -34,6 +34,7 @@ class Solution:
         for idx, num in enumerate(nums):
             # 현재 index 가 max_idx 보다 크면 안됨. 
             if idx > max_idx:
+                print(idx, max_idx) # 도달 못하는 경우
                 return False 
 
             max_idx = max(max_idx, idx + num)
