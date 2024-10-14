@@ -30,7 +30,11 @@ class Solution:
         # 동일하면 quad 로 카운트하기,
         # 동일하지 않으면 정사각형을 4개로 나눔 -> 다시 check_square 호출 
         def make_quad_tree(n):
-            ...
+            l = 
+            up_left = check_sqaure()
+            up_right = check_sqaure() 
+            down_left =check_sqaure() 
+            down_right = check_sqaure()
             
         make_quad_tree(n)
         return 
