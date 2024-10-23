@@ -40,7 +40,17 @@ from typing import List
 
 class Solution:
     def summaryRanges(self, nums: List[int]) -> List[str]:
-        answer = []
+        result = []
+        start = nums[0]
 
+        def format_string(a, b):
+            return str(a)+"->"+str(b)
 
-        return answer 
+        n = len(nums)
+        for i in range(n):
+            if start == nums[i]:
+                result.append()
+            else: 
+                result.append(format_string())
+            start = nums[i+1]
+        return result  
