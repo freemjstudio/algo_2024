@@ -9,7 +9,10 @@ class TreeNode:
 
 from typing import Optional 
 
+#### 시도 1
+
 import heapq 
+
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
         queue = []
@@ -28,13 +31,14 @@ class Solution:
                 visit_node(root.right)
 
         visit_node(root)
+        print(queue)
         heapq.heapify(queue)
 
         """
         힙에 모든 노드를 넣고 k-1 번만큼 heap에서 pop 시켜준다. 
         """
-
+        answer = 0
         # heappop 
-        for _ in range(k-1):
+        for _ in range(k):
             answer = heapq.heappop(queue)
         return answer 
