@@ -19,6 +19,7 @@ Example 1:
 
 Input: nums = [0,1,2,4,5,7]
 Output: ["0->2","4->5","7"] # 이건 정렬된 상태이다. 각각의 숫자는 정확히 하나의 구간 안에 속해야 한다. 
+0, 1, 2, 
 Explanation: The ranges are:
 [0,2] --> "0->2"
 [4,5] --> "4->5"
@@ -41,16 +42,29 @@ from typing import List
 class Solution:
     def summaryRanges(self, nums: List[int]) -> List[str]:
         result = []
+        
+        def formatter(s, e):
+            return f"{s}->{e}"
+            
+        # 예외처리    
+        if not nums:
+            return []
+
         start = nums[0]
-
-        def format_string(a, b):
-            return str(a)+"->"+str(b)
-
-        n = len(nums)
-        for i in range(n):
-            if start == nums[i]:
-                result.append()
-            else: 
-                result.append(format_string())
-            start = nums[i+1]
-        return result  
+        
+        for i in range(0, len(nums)-1): 
+            if nums[i]+1 == nums[i+1]:
+                continue
+            else:
+                if nums[i] == start:
+                    result.append(str(nums[i]))
+                    start = nums[i+1]
+                else: 
+                    result.append(formatter(start, nums[i]))
+                    start = nums[i+1]
+        end = nums[-1]
+        if start == end:
+            result.append(str(end))
+        else: 
+            result.append(formatter(start, end))
+        return result 
