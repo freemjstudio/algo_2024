@@ -1,6 +1,6 @@
-# https://leetcode.com/problems/maximum-spending-after-buying-items/description/
-
 """
+
+https://leetcode.com/problems/maximum-spending-after-buying-items/description/
 
 You are given a 0-indexed m * n integer matrix values, representing the values of m * n different items in m different shops. Each shop has n items where the jth item in the ith shop has a value of values[i][j]. Additionally, the items in the ith shop are sorted in non-increasing order of value. That is, values[i][j] >= values[i][j + 1] for all 0 <= j < n - 1.
 
@@ -55,3 +55,23 @@ Constraints:
 values[i] are sorted in non-increasing order.
 
 """
+
+import heapq 
+
+class Solution:
+    def maxSpending(self, values: List[List[int]]) -> int:
+        result = 0
+        m, n = len(values), len(values[0])
+        total_num = m * n 
+
+        items = []
+
+        for i in range(m):
+            for j in range(n):
+                heapq.heappush(items, values[i][j])
+
+        for index in range(1, total_num+1):
+            price = heapq.heappop(items)
+            result += index * price
+
+        return result 
