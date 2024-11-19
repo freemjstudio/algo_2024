@@ -32,58 +32,31 @@ prerequisites[i].length == 2
 """
 
 from types import List 
+from collections import deque, defaultdict
 
 # Cycle 판별 문제 ! Cycle 없으면 True, 있으면 False 
 
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        parents = [node for node in range(numCourses)] # 루트 노드를 자기 자신으로 설정
         answer = False 
+        graph = defaultdict(list)
 
-        def find(x):
-            if parents[x] != x: # 현재 node가 root node가 아니라면
-                return find(parents[x]) # 재귀함수를 호출한다. 
-            return x    # root node 
+        for i in range(numCourses):
+            graph[i] = []
+        # y -> x
+        for x, y in prerequisites:
+            graph[y].append(x)
         
-        # 두 원소가 속한 집합을 하나로 합친다. 
-        def union(a, b):
-            a = find(a)
-            b = find(b)
-            
-            if a < b:
-                parents[b] = a
-            else: 
-                parents[a] = b
+        queue = deque(prerequisites)
+        
+        def bfs(queue):
+            while queue:
+                x, y = queue.popleft()
 
-        for a, b in prerequisites:
-            # b -> a : b 를 들어야 a를 들을 수 있다. 
-            union(a, b)
-
+                if y in graph[x]:
+                    return False 
+                else: 
+                    graph[x].append(y)
+            return True 
+        answer = bfs(queue)
         return answer
-
-# class Solution:
-
-#     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-#         parents = [node for node in range(numCourses)] # 루트 노드를 자기 자신으로 설정
-#         answer = False 
-
-#         def find(x):
-#             if parents[x] != x: # 현재 node가 root node가 아니라면
-#                 return find(parents[x]) # 재귀함수를 호출한다. 
-#             return x    # root node 
-        
-#         # 두 원소가 속한 집합을 하나로 합친다. 
-#         def union(a, b):
-#             a = find(a)
-#             b = find(b)
-            
-#             if a < b:
-#                 parents[b] = a
-#             else: 
-#                 parents[a] = b
-
-#         for a, b in prerequisites:
-#             # b -> a : b 를 들어야 a를 들을 수 있다. 
-#             union(a, b)
-
-#         return answer
