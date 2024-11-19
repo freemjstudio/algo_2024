@@ -31,7 +31,6 @@ prerequisites[i].length == 2
 
 """
 
-# Cycle 판별 문제 ! Cycle 없으면 True, 있으면 False 
 from collections import deque, defaultdict
 
 class Solution:
@@ -46,23 +45,21 @@ class Solution:
         ### BFS 
         queue = deque([])
         visited = [False] * (numCourses)
-        enqueued = [False] * (numCourses)
 
         # 진입 차수가 0 인 노드만 queue 에 삽입한다. 
         for node in range(numCourses):
             if indegree_dict[node] == 0: 
                 queue.append(node)
-                enqueued[node] = True 
+                visited[node] = True 
 
         while queue: 
             x = queue.popleft()
-            visited[x] = True 
-
+        
             for next_node in graph[x]: # 인접한 노드들을 조회한다. 
                 indegree_dict[next_node] -= 1
-                if indegree_dict[next_node] == 0 and not enqueued[next_node]: 
+                if indegree_dict[next_node] == 0 and not visited[next_node]: 
                     queue.append(next_node)
-                    enqueued[next_node] = True  
+                    visited[next_node] = True 
                     
         for node in range(numCourses):
             if not visited[node]:
