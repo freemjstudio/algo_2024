@@ -1,7 +1,7 @@
 """
 https://leetcode.com/problems/course-schedule/description/
 
-There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
+There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. \You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
 
 For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
 Return true if you can finish all courses. Otherwise, return false.
@@ -31,32 +31,40 @@ prerequisites[i].length == 2
 
 """
 
-from types import List 
-from collections import deque, defaultdict
-
 # Cycle 판별 문제 ! Cycle 없으면 True, 있으면 False 
+from collections import deque, defaultdict
 
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        answer = False 
         graph = defaultdict(list)
-
-        for i in range(numCourses):
-            graph[i] = []
+        indegree_dict = [0] * numCourses # 진입 차수 기록
         # y -> x
         for x, y in prerequisites:
-            graph[y].append(x)
-        
-        queue = deque(prerequisites)
-        
-        def bfs(queue):
-            while queue:
-                x, y = queue.popleft()
+            graph[y].append(x) # 인접 노드 간선 연결 
+            indegree_dict[x] += 1
 
-                if y in graph[x]:
-                    return False 
-                else: 
-                    graph[x].append(y)
-            return True 
-        answer = bfs(queue)
-        return answer
+        ### BFS 
+        queue = deque([])
+        visited = [False] * (numCourses)
+        enqueued = [False] * (numCourses)
+
+        # 진입 차수가 0 인 노드만 queue 에 삽입한다. 
+        for node in range(numCourses):
+            if indegree_dict[node] == 0: 
+                queue.append(node)
+                enqueued[node] = True 
+
+        while queue: 
+            x = queue.popleft()
+            visited[x] = True 
+
+            for next_node in graph[x]: # 인접한 노드들을 조회한다. 
+                indegree_dict[next_node] -= 1
+                if indegree_dict[next_node] == 0 and not enqueued[next_node]: 
+                    queue.append(next_node)
+                    enqueued[next_node] = True  
+                    
+        for node in range(numCourses):
+            if not visited[node]:
+                return False 
+        return True 
