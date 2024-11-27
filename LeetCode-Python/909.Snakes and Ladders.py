@@ -43,46 +43,39 @@ Input: board = [[-1,-1],[-1,3]]
 Output: 1
 """
 
-from typing import List 
-
-from typing import List 
-import sys 
-
-sys.setrecursionlimit(10**7)
+from typing import List
+from collections import deque
 
 class Solution:
-    
-    def get_position(self, n:int, pos:int):
-        x = (pos//n) - 1
-        y = pos%n
-        if y < 0:
-            y += n 
-            
-        return (x, y)
-    
-    # [curr + 1, min(curr + 6, n2)]
     def snakesAndLadders(self, board: List[List[int]]) -> int:
-        n = len(board) 
-        # (n-1, 0), (n-1, 1), ...
-        
-        # 현재 위치 
-        curr = 1 
-        answer = n * n 
-        # back tracking
-        def move(curr:int, count:int):
-            nonlocal answer 
-            if curr >= n*n: 
-                return min(answer, count)
-            if count >= n*n: 
-                return -1
-            
-            x, y = self.get_position(n, curr)
-            if board[x][y] != -1:
-                return move(board[x][y], count)
+        n = len(board)
+        def get_curr_pos(curr):
+            x = (curr-1) // n 
+            y = (curr-1) % n # 짝수 
+            if x%2 == 1: # 홀수 row 인 경우 
+                y = n - y -1
+            return n - x -1, y
 
-            for dice in range(1, 7): # dice step
-                move(curr + dice, count+1)
-        
-        move(curr, 0)
+        dice_count = 0 # dice counter
+        queue = deque([1]) # 시작하는 칸 : 1
+        visited = {1} # 방문한 칸 기록
 
-        return answer
+        while queue:
+            for _ in range(len(queue)):
+                curr_pos = queue.popleft()
+
+                if curr_pos == n*n:
+                    return dice_count
+                
+                for next_pos in range(curr_pos + 1, min(curr_pos + 6, n*n)+1):
+                    x, y = get_curr_pos(next_pos)
+
+                    if board[x][y] != -1:
+                        next_pos = board[x][y]
+                    
+                    if next_pos not in visited: 
+                        queue.append(next_pos)
+                        visited.add(next_pos)
+            dice_count += 1
+
+        return -1 
