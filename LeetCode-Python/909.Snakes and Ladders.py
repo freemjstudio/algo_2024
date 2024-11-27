@@ -6,8 +6,9 @@ You are given an n x n integer matrix board where the cells are labeled from 1 t
 
 You start on square 1 of the board. In each move, starting from square curr, do the following:
 
-Choose a destination square next with a label in the range [curr + 1, min(curr + 6, n2)].
+Choose a destination square next with a label in the range [curr + 1, min(curr + 6, n2)]. -> backtracking 으로 횟수를 세어야 할 것 같다. 모든 경우의 수의 ! 
 This choice simulates the result of a standard 6-sided die roll: i.e., there are always at most 6 destinations,
+
 regardless of the size of the board.
 If next has a snake or ladder, you must move to the destination of that snake or ladder. Otherwise, you move to next.
 The game ends when you reach the square n2.
@@ -44,6 +45,11 @@ Output: 1
 
 from typing import List 
 
+from typing import List 
+import sys 
+
+sys.setrecursionlimit(10**7)
+
 class Solution:
     
     def get_position(self, n:int, pos:int):
@@ -54,26 +60,29 @@ class Solution:
             
         return (x, y)
     
+    # [curr + 1, min(curr + 6, n2)]
     def snakesAndLadders(self, board: List[List[int]]) -> int:
         n = len(board) 
         # (n-1, 0), (n-1, 1), ...
         
         # 현재 위치 
         curr = 1 
-        dice_count = 0 
-        # 숫자를 보고 (i, j) 를 반환하는 함수 작성하기 
-        while True: 
-            if curr == n * n: 
-                return dice_count
+        answer = n * n 
+        # back tracking
+        def move(curr:int, count:int):
+            nonlocal answer 
+            if curr >= n*n: 
+                return min(answer, count)
+            if count >= n*n: 
+                return -1
             
-            curr += 1 # 한 칸 이동 
-            dice_count += 1
-            
-            x, y = self.get_position(curr)
-            if board[x][y] == -1: 
-                continue 
-            else:
-                curr = board[x][y] # 뱀 또는 사다리로 이동하기 
-                
-            if dice_count > n*n: # 도달 불가능한 경우 
-                return -1 
+            x, y = self.get_position(n, curr)
+            if board[x][y] != -1:
+                return move(board[x][y], count)
+
+            for dice in range(1, 7): # dice step
+                move(curr + dice, count+1)
+        
+        move(curr, 0)
+
+        return answer
